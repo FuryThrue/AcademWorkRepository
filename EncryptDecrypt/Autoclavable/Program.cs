@@ -2,7 +2,7 @@
 using System;
 using System.Text;
 
-namespace EncryptDecrypt
+namespace Autoclavable
 {
     class Program
     {
@@ -11,7 +11,7 @@ namespace EncryptDecrypt
 
         static void Main(string[] args)
         {
-            var appName = "Шифр Цезаря";
+            var appName = "Автоключевой шифр";
             ConsoleMessages.WriteWelcome(appName);
 
             while (true)
@@ -46,7 +46,7 @@ namespace EncryptDecrypt
             var key = ConsoleMessages.GetKeyForEncrypt(_alphabet);
 
             _lastEncryptedMessage = Encrypt(message, key);
-            Console.WriteLine($"Зашифрованное сообщение: {_lastEncryptedMessage}");
+            ConsoleMessages.WriteResult($"Зашифрованное сообщение: {_lastEncryptedMessage}");
         }
 
         private static void DecryptPrepare()
@@ -80,32 +80,44 @@ namespace EncryptDecrypt
 
         private static string Encrypt(string message, int key)
         {
+            var lastKey = key;
+
             var builder = new StringBuilder();
-            foreach (var c in message)
+            for (int i = 0; i < message.Length; i++)
             {
-                var numberOfChar = _alphabet.IndexOf(c);
-                var newNumber = (numberOfChar + key) % _alphabet.Length;
+                var currentChar = message[i];
+                var numberOfChar = _alphabet.IndexOf(currentChar);
+
+                var newNumber = (numberOfChar + lastKey) % _alphabet.Length;
                 var newChar = _alphabet[newNumber];
                 builder.Append(newChar);
+
+                lastKey = numberOfChar;
             }
             return builder.ToString().ToUpper();
         }
 
         private static void Decrypt(string encodedMessage)
         {
-            var lower = encodedMessage.ToLower();
+            var lowerEncodedMessage = encodedMessage.ToLower();
             var alphabetLength = _alphabet.Length;
             for (int i = 0; i < alphabetLength; i++)
             {
+                var lastKey = i;
+
                 var builder = new StringBuilder();
-                foreach (var c in lower)
+                for (int j = 0; j < lowerEncodedMessage.Length; j++)
                 {
-                    var numberOfChar = _alphabet.IndexOf(c);
-                    var newNumber = (numberOfChar - i) % alphabetLength;
+                    var currentChar = lowerEncodedMessage[j];
+                    var numberOfChar = _alphabet.IndexOf(currentChar);
+
+                    var newNumber = (numberOfChar - lastKey) % _alphabet.Length;
                     if (newNumber < 0)
                         newNumber += alphabetLength;
                     var newChar = _alphabet[newNumber];
                     builder.Append(newChar);
+
+                    lastKey = newNumber;
                 }
                 ConsoleMessages.WriteResult($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{builder.ToString()}""");
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MessagesLibrary;
+using System;
 using System.Text;
 
 namespace EncryptDecrypt
@@ -12,22 +13,17 @@ namespace EncryptDecrypt
         static void Main(string[] args)
         {
             var appName = "Афинный шифр";
-            Console.Title = appName;
-            Console.WriteLine(appName);
-            Console.WriteLine();
+            ConsoleMessages.WriteWelcome(appName);
 
             while (true)
             {
-                Console.WriteLine("Выберите действие:");
-                Console.WriteLine("1 - Зашифровать");
-                Console.WriteLine($"2 - Расшифровать {_lastEncryptedMessage}");
-                Console.WriteLine("3 - Выход");
-                Console.Write("Вводите: ");
-                var choose = ReadInt();
+                ConsoleMessages.WriteStartAction();
+
+                var choose = ConsoleMessages.ReadInt();
                 while (choose < 1 || choose > 3)
                 {
                     Console.Write("Неверный выбор! Введите 1, 2 или 3: ");
-                    choose = ReadInt();
+                    choose = ConsoleMessages.ReadInt();
                 }
                 Console.WriteLine();
 
@@ -42,18 +38,15 @@ namespace EncryptDecrypt
                     case 3:
                         return;
                 }
-                Console.WriteLine();
             }
         }
 
         private static void EncryptPrepare()
         {
-            Console.Write("Введите сообщение: ");
-            var message = ReadString();
+            var message = ConsoleMessages.GetMessageForEncrypt(_alphabet);
 
-            Console.WriteLine();
             Console.Write("Введите ключ для мультипликативного шифра: ");
-            var keyMulty = ReadInt();
+            var keyMulty = ConsoleMessages.ReadInt();
             while (keyMulty >= _alphabet.Length || !CheckKey(keyMulty))
             {
                 Console.WriteLine("Недействительный ключ");
@@ -61,19 +54,20 @@ namespace EncryptDecrypt
                 Console.WriteLine("2. Ключ не может быть больше размера алфавита");
                 Console.WriteLine($"3. Размер алфавита достигает {_alphabet.Length} символов");
                 Console.Write("Введите снова:");
-                keyMulty = ReadInt();
+                keyMulty = ConsoleMessages.ReadInt();
             }
+
             Console.Write("Введите ключ для шифра Цезаря (аддитивный шифр): ");
-            var keyCesar = ReadInt();
+            var keyCesar = ConsoleMessages.ReadInt();
             while (keyCesar < 0 || keyCesar > _alphabet.Length)
             {
                 Console.WriteLine($"Ключе должен быть в диапазоне от 0 до {_alphabet.Length}");
-                keyCesar = ReadInt();
+                keyCesar = ConsoleMessages.ReadInt();
             }
             Console.WriteLine();
 
             _lastEncryptedMessage = Encrypt(message, keyCesar, keyMulty);
-            Console.WriteLine($"Зашифрованное сообщение: {_lastEncryptedMessage}");
+            ConsoleMessages.WriteResult($"Зашифрованное сообщение: {_lastEncryptedMessage}");
         }
 
         private static bool CheckKey(int key)
@@ -104,7 +98,7 @@ namespace EncryptDecrypt
             var encodedMessage = _lastEncryptedMessage;
             if (encodedMessage == null || encodedMessage.Length == 0)
             {
-                Console.Write("Сначала следует зашифровать какое-нибудь слово");
+                ConsoleMessages.WriteResult("Сначала следует зашифровать какое-нибудь слово");
                 return;
             }
             Decrypt(encodedMessage);
@@ -114,12 +108,15 @@ namespace EncryptDecrypt
         {
             var alphabetLength = _alphabet.Length;
             _oldCharNumbers = new int[message.Length];
+
             var builder = new StringBuilder();
             for (int i = 0; i < message.Length; i++)
             {
                 var numberOfChar = _alphabet.IndexOf(message[i]);
+
                 var cesarNumber = (numberOfChar * keyMulty + keyCesar);
                 _oldCharNumbers[i] = cesarNumber;
+
                 var cesarNumberModed = cesarNumber % alphabetLength;
                 var newChar = _alphabet[cesarNumberModed];
                 builder.Append(newChar);
@@ -143,44 +140,14 @@ namespace EncryptDecrypt
                     for (int i = 0; i < lower.Length; i++)
                     {
                         var multyiplicativeNumber = ((_oldCharNumbers[i] - keyCesar) / keyMulty) % alphabetLength;
+                        if (multyiplicativeNumber < 0)
+                            multyiplicativeNumber += alphabetLength;
                         var newChar = _alphabet[multyiplicativeNumber];
                         builder.Append(newChar);
                     }
-                    Console.WriteLine($@"Если ключ мультипликативного шифра={keyMulty}, ключ шифра Цезаря={keyCesar}, тогда расшифрованное сообщение ""{builder.ToString()}""");
+                    ConsoleMessages.WriteResult($@"Если ключ мультипликативного шифра={keyMulty}, ключ шифра Цезаря={keyCesar}, тогда расшифрованное сообщение ""{builder.ToString()}""");
                 }
             }
-        }
-
-        private static int ReadInt()
-        {
-            var result = 0;
-            var parseResult = false;
-            do
-            {
-                var line = Console.ReadLine();
-                parseResult = int.TryParse(line, out result);
-                if (!parseResult)
-                {
-                    Console.Write("Неверные данные! Введите число: ");
-                }
-            } while (!parseResult);
-            return result;
-        }
-
-        private static string ReadString()
-        {
-            var inputedString = Console.ReadLine();
-            inputedString = inputedString.ToLower();
-            foreach (var c in inputedString)
-            {
-                if (!_alphabet.Contains(c.ToString()))
-                {
-                    Console.Write("Введенное сообщение содержит недопустимые символы. Попробуйте снова: ");
-                    inputedString = ReadString();
-                    break;
-                }
-            }
-            return inputedString;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace EncryptDecrypt
 
         static void Main(string[] args)
         {
-            var appName = "Афинный шифр";
+            var appName = "Мультипликативный шифр";
             Console.Title = appName;
             Console.WriteLine(appName);
             Console.WriteLine();
@@ -52,27 +52,20 @@ namespace EncryptDecrypt
             var message = ReadString();
 
             Console.WriteLine();
-            Console.Write("Введите ключ для мультипликативного шифра: ");
-            var keyMulty = ReadInt();
-            while (keyMulty >= _alphabet.Length || !CheckKey(keyMulty))
+            Console.Write("Введите ключ: ");
+            var key = ReadInt();
+            while (key >= _alphabet.Length || !CheckKey(key))
             {
                 Console.WriteLine("Недействительный ключ");
                 Console.WriteLine("1. Ключ и размер алфавита должны быть взаимно простыми числами (не иметь общего делителя)");
                 Console.WriteLine("2. Ключ не может быть больше размера алфавита");
                 Console.WriteLine($"3. Размер алфавита достигает {_alphabet.Length} символов");
-                Console.Write("Введите снова:");
-                keyMulty = ReadInt();
-            }
-            Console.Write("Введите ключ для шифра Цезаря (аддитивный шифр): ");
-            var keyCesar = ReadInt();
-            while (keyCesar < 0 || keyCesar > _alphabet.Length)
-            {
-                Console.WriteLine($"Ключе должен быть в диапазоне от 0 до {_alphabet.Length}");
-                keyCesar = ReadInt();
+                Console.WriteLine("Введите снова:");
+                key = ReadInt();
             }
             Console.WriteLine();
 
-            _lastEncryptedMessage = Encrypt(message, keyCesar, keyMulty);
+            _lastEncryptedMessage = Encrypt(message, key);
             Console.WriteLine($"Зашифрованное сообщение: {_lastEncryptedMessage}");
         }
 
@@ -110,18 +103,17 @@ namespace EncryptDecrypt
             Decrypt(encodedMessage);
         }
 
-        private static string Encrypt(string message, int keyCesar, int keyMulty)
+        private static string Encrypt(string message, int key)
         {
-            var alphabetLength = _alphabet.Length;
             _oldCharNumbers = new int[message.Length];
             var builder = new StringBuilder();
             for (int i = 0; i < message.Length; i++)
             {
                 var numberOfChar = _alphabet.IndexOf(message[i]);
-                var cesarNumber = (numberOfChar * keyMulty + keyCesar);
-                _oldCharNumbers[i] = cesarNumber;
-                var cesarNumberModed = cesarNumber % alphabetLength;
-                var newChar = _alphabet[cesarNumberModed];
+                var newNumberNoModed = (numberOfChar * key);
+                _oldCharNumbers[i] = newNumberNoModed;
+                var newNumber = newNumberNoModed % _alphabet.Length;  
+                var newChar = _alphabet[newNumber];
                 builder.Append(newChar);
             }
             return builder.ToString().ToUpper();
@@ -131,23 +123,21 @@ namespace EncryptDecrypt
         {
             var lower = encodedMessage.ToLower();
             var alphabetLength = _alphabet.Length;
-            for (int keyMulty = 0; keyMulty < alphabetLength; keyMulty++)
+            for (int i = 0; i < alphabetLength; i++)
             {
-                var commonFactor = GetCommonFactor(keyMulty);
+                var commonFactor = GetCommonFactor(i);
                 if (commonFactor > 1)
                     continue;
 
-                for (int keyCesar = 0; keyCesar < alphabetLength; keyCesar++)
+                var builder = new StringBuilder();
+                for (int j = 0; j < lower.Length; j++)
                 {
-                    var builder = new StringBuilder();
-                    for (int i = 0; i < lower.Length; i++)
-                    {
-                        var multyiplicativeNumber = ((_oldCharNumbers[i] - keyCesar) / keyMulty) % alphabetLength;
-                        var newChar = _alphabet[multyiplicativeNumber];
-                        builder.Append(newChar);
-                    }
-                    Console.WriteLine($@"Если ключ мультипликативного шифра={keyMulty}, ключ шифра Цезаря={keyCesar}, тогда расшифрованное сообщение ""{builder.ToString()}""");
+                    var numberOfChar = _alphabet.IndexOf(lower[j]);
+                    var oldNumber = _oldCharNumbers[j] / i % alphabetLength;
+                    var newChar = _alphabet[oldNumber];
+                    builder.Append(newChar);
                 }
+                Console.WriteLine($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{builder.ToString()}""");
             }
         }
 

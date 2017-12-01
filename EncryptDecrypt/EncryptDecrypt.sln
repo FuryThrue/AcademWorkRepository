@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cesar", "EncryptDecrypt\Cesar.csproj", "{DFAB891F-A077-4664-8ACE-89A1CE3A718F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Affine", "Affine\Affine.csproj", "{1669165D-871A-460B-9FCB-320B56EFFB60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multiplicative", "Multiplicative\Multiplicative.csproj", "{7F73A636-0355-4DED-8712-5FFA79D0BF3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoclavable", "Autoclavable\Autoclavable.csproj", "{535D36E7-7DFE-4926-A3C4-0DEF12388506}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesLibrary", "MessagesLibrary\MessagesLibrary.csproj", "{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFAB891F-A077-4664-8ACE-89A1CE3A718F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFAB891F-A077-4664-8ACE-89A1CE3A718F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFAB891F-A077-4664-8ACE-89A1CE3A718F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFAB891F-A077-4664-8ACE-89A1CE3A718F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1669165D-871A-460B-9FCB-320B56EFFB60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1669165D-871A-460B-9FCB-320B56EFFB60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1669165D-871A-460B-9FCB-320B56EFFB60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1669165D-871A-460B-9FCB-320B56EFFB60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F73A636-0355-4DED-8712-5FFA79D0BF3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F73A636-0355-4DED-8712-5FFA79D0BF3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F73A636-0355-4DED-8712-5FFA79D0BF3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F73A636-0355-4DED-8712-5FFA79D0BF3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{535D36E7-7DFE-4926-A3C4-0DEF12388506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{535D36E7-7DFE-4926-A3C4-0DEF12388506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{535D36E7-7DFE-4926-A3C4-0DEF12388506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{535D36E7-7DFE-4926-A3C4-0DEF12388506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75763154-81C9-430B-BCD0-14D2DD8338DC}
+	EndGlobalSection
+EndGlobal

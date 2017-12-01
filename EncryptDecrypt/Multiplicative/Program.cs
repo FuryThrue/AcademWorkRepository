@@ -1,5 +1,4 @@
-﻿using MessagesLibrary;
-using System;
+﻿using System;
 using System.Text;
 
 namespace EncryptDecrypt
@@ -13,17 +12,22 @@ namespace EncryptDecrypt
         static void Main(string[] args)
         {
             var appName = "Мультипликативный шифр";
-            ConsoleMessages.WriteWelcome(appName);
+            Console.Title = appName;
+            Console.WriteLine(appName);
+            Console.WriteLine();
 
             while (true)
             {
-                ConsoleMessages.WriteStartAction();
-
-                var choose = ConsoleMessages.ReadInt();
+                Console.WriteLine("Выберите действие:");
+                Console.WriteLine("1 - Зашифровать");
+                Console.WriteLine($"2 - Расшифровать {_lastEncryptedMessage}");
+                Console.WriteLine("3 - Выход");
+                Console.Write("Вводите: ");
+                var choose = ReadInt();
                 while (choose < 1 || choose > 3)
                 {
                     Console.Write("Неверный выбор! Введите 1, 2 или 3: ");
-                    choose = ConsoleMessages.ReadInt();
+                    choose = ReadInt();
                 }
                 Console.WriteLine();
 
@@ -38,14 +42,18 @@ namespace EncryptDecrypt
                     case 3:
                         return;
                 }
+                Console.WriteLine();
             }
         }
 
         private static void EncryptPrepare()
         {
-            var message = ConsoleMessages.GetMessageForEncrypt(_alphabet);
+            Console.Write("Введите сообщение: ");
+            var message = ReadString();
 
-            var key = ConsoleMessages.GetKeyForEncrypt(_alphabet);
+            Console.WriteLine();
+            Console.Write("Введите ключ: ");
+            var key = ReadInt();
             while (key >= _alphabet.Length || !CheckKey(key))
             {
                 Console.WriteLine("Недействительный ключ");
@@ -53,12 +61,12 @@ namespace EncryptDecrypt
                 Console.WriteLine("2. Ключ не может быть больше размера алфавита");
                 Console.WriteLine($"3. Размер алфавита достигает {_alphabet.Length} символов");
                 Console.WriteLine("Введите снова:");
-                key = ConsoleMessages.ReadInt();
+                key = ReadInt();
             }
             Console.WriteLine();
 
             _lastEncryptedMessage = Encrypt(message, key);
-            ConsoleMessages.WriteResult($"Зашифрованное сообщение: {_lastEncryptedMessage}");
+            Console.WriteLine($"Зашифрованное сообщение: {_lastEncryptedMessage}");
         }
 
         private static bool CheckKey(int key)
@@ -104,7 +112,7 @@ namespace EncryptDecrypt
                 var numberOfChar = _alphabet.IndexOf(message[i]);
                 var newNumberNoModed = (numberOfChar * key);
                 _oldCharNumbers[i] = newNumberNoModed;
-                var newNumber = newNumberNoModed % _alphabet.Length;
+                var newNumber = newNumberNoModed % _alphabet.Length;  
                 var newChar = _alphabet[newNumber];
                 builder.Append(newChar);
             }
@@ -129,8 +137,40 @@ namespace EncryptDecrypt
                     var newChar = _alphabet[oldNumber];
                     builder.Append(newChar);
                 }
-                ConsoleMessages.WriteResult($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{builder.ToString()}""");
+                Console.WriteLine($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{builder.ToString()}""");
             }
+        }
+
+        private static int ReadInt()
+        {
+            var result = 0;
+            var parseResult = false;
+            do
+            {
+                var line = Console.ReadLine();
+                parseResult = int.TryParse(line, out result);
+                if (!parseResult)
+                {
+                    Console.Write("Неверные данные! Введите число: ");
+                }
+            } while (!parseResult);
+            return result;
+        }
+
+        private static string ReadString()
+        {
+            var inputedString = Console.ReadLine();
+            inputedString = inputedString.ToLower();
+            foreach (var c in inputedString)
+            {
+                if (!_alphabet.Contains(c.ToString()))
+                {
+                    Console.Write("Введенное сообщение содержит недопустимые символы. Попробуйте снова: ");
+                    inputedString = ReadString();
+                    break;
+                }
+            }
+            return inputedString;
         }
     }
 }

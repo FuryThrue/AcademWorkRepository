@@ -1,17 +1,23 @@
 ﻿using MessagesLibrary;
 using System;
-using System.Text;
 
-namespace EncryptDecrypt
+namespace Playfair
 {
     class Program
     {
-        const string ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+        readonly static string[,] _defaultKey = new string[,]
+        {
+            { "L", "G", "D", "B", "A" },
+            { "Q", "M", "H", "E", "C" },
+            { "U", "R", "N", "I/J", "F" },
+            { "X", "V", "S", "O", "K" },
+            { "Z", "Y", "W", "T", "P" }
+        };
         static string _lastEncryptedMessage;
 
         static void Main(string[] args)
         {
-            var appName = "Шифр Цезаря";
+            var appName = "Шифр Плейфера";
             ConsoleMessages.WriteWelcome(appName);
 
             while (true)
@@ -29,7 +35,7 @@ namespace EncryptDecrypt
                 switch (choose)
                 {
                     case 1:
-                        EncryptPrepare();
+                        Encrypt();
                         break;
                     case 2:
                         DecryptPrepare();
@@ -40,13 +46,13 @@ namespace EncryptDecrypt
             }
         }
 
-        private static void EncryptPrepare()
+        private static void Encrypt()
         {
-            var message = ConsoleMessages.GetMessageForEncrypt(ALPHABET);
-            var key = ConsoleMessages.GetKeyForEncrypt(ALPHABET);
+            var message = ConsoleMessages.GetMessageForEncrypt(_defaultKey);
+            var encryptor = new Encryptor();
+            _lastEncryptedMessage = encryptor.Encrypt(message, _defaultKey);
 
-            _lastEncryptedMessage = Encrypt(message, key);
-            Console.WriteLine($"Зашифрованное сообщение: {_lastEncryptedMessage}");
+            ConsoleMessages.WriteResult($"Зашифрованное сообщение: {_lastEncryptedMessage}");
         }
 
         private static void DecryptPrepare()
@@ -79,37 +85,13 @@ namespace EncryptDecrypt
             Decrypt(encodedMessage);
         }
 
-        private static string Encrypt(string message, int key)
-        {
-            var builder = new StringBuilder();
-            foreach (var c in message)
-            {
-                var numberOfChar = ALPHABET.IndexOf(c);
-                var newNumber = (numberOfChar + key) % ALPHABET.Length;
-                var newChar = ALPHABET[newNumber];
-                builder.Append(newChar);
-            }
-            return builder.ToString().ToUpper();
-        }
-
         private static void Decrypt(string encodedMessage)
         {
-            var lower = encodedMessage.ToLower();
-            var alphabetLength = ALPHABET.Length;
-            for (int i = 0; i < alphabetLength; i++)
-            {
-                var builder = new StringBuilder();
-                foreach (var c in lower)
-                {
-                    var numberOfChar = ALPHABET.IndexOf(c);
-                    var newNumber = (numberOfChar - i) % alphabetLength;
-                    if (newNumber < 0)
-                        newNumber += alphabetLength;
-                    var newChar = ALPHABET[newNumber];
-                    builder.Append(newChar);
-                }
-                ConsoleMessages.WriteResult($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{builder.ToString()}""");
-            }
+            var decryptor = new Decryptor();
+            //decryptor.Decrypt(encodedMessage);
+            var decodedMessage = decryptor.Decrypt(encodedMessage, _defaultKey);
+
+            ConsoleMessages.WriteResult($@"Расшифрованное сообщение ""{decodedMessage}""");
         }
     }
 }

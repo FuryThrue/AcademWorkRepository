@@ -7,7 +7,7 @@ namespace EncryptDecrypt
     class Program
     {
         static int[] _oldCharNumbers;
-        const string _alphabet = "abcdefghijklmnopqrstuvwxyz";
+        const string ALPHABET = "abcdefghijklmnopqrstuvwxyz";
         static string _lastEncryptedMessage;
 
         static void Main(string[] args)
@@ -43,15 +43,15 @@ namespace EncryptDecrypt
 
         private static void EncryptPrepare()
         {
-            var message = ConsoleMessages.GetMessageForEncrypt(_alphabet);
+            var message = ConsoleMessages.GetMessageForEncrypt(ALPHABET);
 
-            var key = ConsoleMessages.GetKeyForEncrypt(_alphabet);
-            while (key >= _alphabet.Length || !CheckKey(key))
+            var key = ConsoleMessages.GetKeyForEncrypt(ALPHABET);
+            while (key >= ALPHABET.Length || !CheckKey(key))
             {
                 Console.WriteLine("Недействительный ключ");
                 Console.WriteLine("1. Ключ и размер алфавита должны быть взаимно простыми числами (не иметь общего делителя)");
                 Console.WriteLine("2. Ключ не может быть больше размера алфавита");
-                Console.WriteLine($"3. Размер алфавита достигает {_alphabet.Length} символов");
+                Console.WriteLine($"3. Размер алфавита достигает {ALPHABET.Length} символов");
                 Console.WriteLine("Введите снова:");
                 key = ConsoleMessages.ReadInt();
             }
@@ -72,7 +72,7 @@ namespace EncryptDecrypt
 
         private static int GetCommonFactor(int key)
         {
-            var alphabetLength = _alphabet.Length;
+            var alphabetLength = ALPHABET.Length;
             var tempKey = key;
             while (alphabetLength != 0 && tempKey != 0)
             {
@@ -101,11 +101,11 @@ namespace EncryptDecrypt
             var builder = new StringBuilder();
             for (int i = 0; i < message.Length; i++)
             {
-                var numberOfChar = _alphabet.IndexOf(message[i]);
+                var numberOfChar = ALPHABET.IndexOf(message[i]);
                 var newNumberNoModed = (numberOfChar * key);
                 _oldCharNumbers[i] = newNumberNoModed;
-                var newNumber = newNumberNoModed % _alphabet.Length;
-                var newChar = _alphabet[newNumber];
+                var newNumber = newNumberNoModed % ALPHABET.Length;
+                var newChar = ALPHABET[newNumber];
                 builder.Append(newChar);
             }
             return builder.ToString().ToUpper();
@@ -114,7 +114,7 @@ namespace EncryptDecrypt
         private static void Decrypt(string encodedMessage)
         {
             var lower = encodedMessage.ToLower();
-            var alphabetLength = _alphabet.Length;
+            var alphabetLength = ALPHABET.Length;
             for (int i = 0; i < alphabetLength; i++)
             {
                 var commonFactor = GetCommonFactor(i);
@@ -124,9 +124,9 @@ namespace EncryptDecrypt
                 var builder = new StringBuilder();
                 for (int j = 0; j < lower.Length; j++)
                 {
-                    var numberOfChar = _alphabet.IndexOf(lower[j]);
+                    var numberOfChar = ALPHABET.IndexOf(lower[j]);
                     var oldNumber = _oldCharNumbers[j] / i % alphabetLength;
-                    var newChar = _alphabet[oldNumber];
+                    var newChar = ALPHABET[oldNumber];
                     builder.Append(newChar);
                 }
                 ConsoleMessages.WriteResult($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{builder.ToString()}""");

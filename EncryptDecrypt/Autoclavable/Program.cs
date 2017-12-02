@@ -6,7 +6,7 @@ namespace Autoclavable
 {
     class Program
     {
-        const string _alphabet = "abcdefghijklmnopqrstuvwxyz";
+        const string ALPHABET = "abcdefghijklmnopqrstuvwxyz";
         static string _lastEncryptedMessage;
 
         static void Main(string[] args)
@@ -42,10 +42,11 @@ namespace Autoclavable
 
         private static void EncryptPrepare()
         {
-            var message = ConsoleMessages.GetMessageForEncrypt(_alphabet);
-            var key = ConsoleMessages.GetKeyForEncrypt(_alphabet);
+            var message = ConsoleMessages.GetMessageForEncrypt(ALPHABET);
+            var key = ConsoleMessages.GetKeyForEncrypt(ALPHABET);
 
-            _lastEncryptedMessage = Encrypt(message, key);
+            var encryptor = new Cryptographer();
+            _lastEncryptedMessage = encryptor.Encrypt(message, key, ALPHABET);
             ConsoleMessages.WriteResult($"Зашифрованное сообщение: {_lastEncryptedMessage}");
         }
 
@@ -73,54 +74,14 @@ namespace Autoclavable
                     break;
                 case 2:
                     encodedMessage = _lastEncryptedMessage;
+                    _lastEncryptedMessage = "";
                     break;
             }
-            Decrypt(encodedMessage);
-        }
 
-        private static string Encrypt(string message, int key)
-        {
-            var lastKey = key;
-
-            var builder = new StringBuilder();
-            for (int i = 0; i < message.Length; i++)
-            {
-                var currentChar = message[i];
-                var numberOfChar = _alphabet.IndexOf(currentChar);
-
-                var newNumber = (numberOfChar + lastKey) % _alphabet.Length;
-                var newChar = _alphabet[newNumber];
-                builder.Append(newChar);
-
-                lastKey = numberOfChar;
-            }
-            return builder.ToString().ToUpper();
-        }
-
-        private static void Decrypt(string encodedMessage)
-        {
-            var lowerEncodedMessage = encodedMessage.ToLower();
-            var alphabetLength = _alphabet.Length;
-            for (int i = 0; i < alphabetLength; i++)
-            {
-                var lastKey = i;
-
-                var builder = new StringBuilder();
-                for (int j = 0; j < lowerEncodedMessage.Length; j++)
-                {
-                    var currentChar = lowerEncodedMessage[j];
-                    var numberOfChar = _alphabet.IndexOf(currentChar);
-
-                    var newNumber = (numberOfChar - lastKey) % _alphabet.Length;
-                    if (newNumber < 0)
-                        newNumber += alphabetLength;
-                    var newChar = _alphabet[newNumber];
-                    builder.Append(newChar);
-
-                    lastKey = newNumber;
-                }
-                ConsoleMessages.WriteResult($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{builder.ToString()}""");
-            }
+            var cryptographer = new Cryptographer();
+            var decryptedMessages = cryptographer.Decrypt(encodedMessage, ALPHABET);
+            for (int i = 0; i < decryptedMessages.Length; i++)
+                ConsoleMessages.WriteResult($@"Если ключ равен {i}, тогда расшифрованное сообщение ""{decryptedMessages[i]}""");
         }
     }
 }

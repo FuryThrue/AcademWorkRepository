@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoclavable", "Autoclavabl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesLibrary", "MessagesLibrary\MessagesLibrary.csproj", "{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playfair", "Playfair\Playfair.csproj", "{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

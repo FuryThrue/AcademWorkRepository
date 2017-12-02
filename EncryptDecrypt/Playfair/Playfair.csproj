@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{535D36E7-7DFE-4926-A3C4-0DEF12388506}</ProjectGuid>
+    <ProjectGuid>{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Autoclavable</RootNamespace>
-    <AssemblyName>Autoclavable</AssemblyName>
+    <RootNamespace>Playfair</RootNamespace>
+    <AssemblyName>Playfair</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cryptographer.cs" />
+    <Compile Include="Decryptor.cs" />
+    <Compile Include="Encryptor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

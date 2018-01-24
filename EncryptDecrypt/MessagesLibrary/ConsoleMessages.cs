@@ -23,6 +23,14 @@ namespace MessagesLibrary
             Console.Write("Введите номер действия: ");
         }
 
+        public static int GetMessageForEncrypt()
+        {
+            Console.Write("Введите сообщение: ");
+            return ReadInt();
+            //var inputedString = Console.ReadLine();
+            //return inputedString.ToLower();
+        }
+
         public static string GetMessageForEncrypt(string alphabet)
         {
             Console.Write("Введите сообщение: ");
@@ -51,6 +59,14 @@ namespace MessagesLibrary
                 key = ReadInt();
             }
             Console.WriteLine();
+
+            return key;
+        }
+
+        public static string GetStringKeyForEncrypt(string alphabet)
+        {
+            Console.Write("Введите ключ: ");
+            var key = ReadString(alphabet);
 
             return key;
         }

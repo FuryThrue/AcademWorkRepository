@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cesar", "EncryptDecrypt\Cesar.csproj", "{DFAB891F-A077-4664-8ACE-89A1CE3A718F}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesLibrary", "MessagesLibrary\MessagesLibrary.csproj", "{DCA013D0-0AFF-4BAB-8B44-BEAAAF0E0952}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playfair", "Playfair\Playfair.csproj", "{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSA", "RSA\RSA.csproj", "{3EBA20FB-05EF-4DFA-9AC0-99DE31A869ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vigener", "Viginer\Vigener.csproj", "{B5703B48-55F3-427D-9617-954F6B148A7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D22225B1-CB2A-4EAE-B2A3-5B9570A893C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EBA20FB-05EF-4DFA-9AC0-99DE31A869ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EBA20FB-05EF-4DFA-9AC0-99DE31A869ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EBA20FB-05EF-4DFA-9AC0-99DE31A869ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EBA20FB-05EF-4DFA-9AC0-99DE31A869ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5703B48-55F3-427D-9617-954F6B148A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5703B48-55F3-427D-9617-954F6B148A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5703B48-55F3-427D-9617-954F6B148A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5703B48-55F3-427D-9617-954F6B148A7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
